@@ -1,0 +1,20 @@
+import os
+from telegram.ext import Updater, MessageHandler, Filters
+
+TOKEN = os.getenv("BOT_TOKEN")  # берём токен из переменных окружения
+
+def reply(update, context):
+    user_text = update.message.text
+    update.message.reply_text(f"Бот работает! Ты написал: {user_text}")
+
+def main():
+    updater = Updater(TOKEN, use_context=True)
+    dp = updater.dispatcher
+
+    dp.add_handler(MessageHandler(Filters.text, reply))
+
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == "__main__":
+    main()
